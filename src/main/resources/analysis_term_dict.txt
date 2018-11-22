@@ -1,0 +1,139 @@
+FM\$Fracture Mechanics\$Fracture Mechanic\$Failure Mode
+BC\$Boundary Condition\$Boundary Conditions\$Boundary condition\$Boundary conditions
+FEM\$Finite Element Method\$Finite Element Model\$Finite element method
+LCF\$Low Cycle Fatigue\$LOW CICLE FATIGUE\$Low cycle fatigue\$Life Cycle Fatigue\$Low Cycle fatigue\$Low cycle fatique
+FEA\$Finite Element Analysis\$Finite Elements Analysis
+PM\$General primary membrane stress\$Premix Mode
+Q\$Secondary stress
+MISO\$Multi-linear ISO-tropic hardening
+TIT\$Turbine Inlet Temperature
+TV2\$Compressor Outlet Temperature\$Compressor Exit Temperature\$Compressor exit temperature
+WEM\$Whole Engine Model
+FCRT\$Fracture Critical Time
+FE\$Finite Element\$Finite element\$Finite Elements (Analysis)
+LC\$Load Case\$LOWER CASING\$Low Caloric (SGT5-2000E Version)\$Low Calorific
+OS\$Over Speed
+TOT\$Turbine Outlet Temperature
+B.C.S\$Boundary Conditions
+DEB\$EN-GJS-400-18U-LT Colt Ambient Strain Debit Factor
+DOF\$Degree of Freedom\$Degrees Of Freedom\$Degree Of Freedom
+F\$Bearing Load Used in Stiffness Calculation
+K\$Kelvin\$Spring Constant (Stiffness)
+M\$Moment Applied to CIC Due to Rotor Standstill
+MZ\$Overhead burden on material
+N\$Engine Trip Speed
+SF\$Safety Factor\$Material Dependent Safety Factor
+SM\$Design Equivalent Stress (Allowable) Not in the Creep Region
+SYRT\$0.2% Minimum Yield Strength at Room Temperature
+SYT\$0.2% Minimum Yield Strength at Design Temperature
+SURT\$Minimum Ultimate Tensile Strength at Room Temperature
+SUT\$Minimum Ultimate Tensile Strength at Design Temperature
+U1\$Average Displacement
+VZ\$Overhead burden on material and labor
+Y\$Yield Strength Used in Elastic-Plastic FEA Model
+ΕB\$Primary Bending Strain
+ΕM\$General Primary Membrane Strain
+ΕT\$Max Strain at Design Temperature
+ΕRT\$Max Strain at Room Temperature
+ΕMAX\$Maximum Calculated Strain
+ϴ\$Rotor Moment of Inertia
+Φ\$Angular acceleration
+CFD\$Computational Fluid Dynamics\$Computational Fluid dynamics
+CAE\$Computer Aided Engineering
+IGES\$Initial Graphics Exchange Specification
+MDO\$Multidisciplinary Optimization
+HCF\$High Cycle Fatigue\$High cycle fatigue
+SS\$Steady state\$Steady State\$Stead State\$Steady State Condition
+PV2\$Compressor exit pressure\$Compressor Exit Pressure\$Compressor Discharge Pressure\$Compressor Outlet pressure
+TT2\$Turbine outlet total temperature\$Turbine Outlet Temperature (Total)\$Turbine outlet temperature, °C\$Turbine Outlet Total Temperature\$Gas Turbine Exhaust Gas Temperature (measured at MBR-plane)\$Turbine Outlet Temperature
+PF\$Penalty Factor
+TI\$Intersection temperature
+1D\$One dimensional
+BDD\$Basic Design Data\$Boundary Definition Data\$Boundary Definition Document
+FSFL\$Full Speed Full Load (Base Load, Steady State conditions)\$Full Speed Full Load
+FSNL\$Full Speed No Load
+HTC\$Heat Transfer Coefficient\$Heat transfer coefficient\$Heat Transfer Coefficients
+K1C\$Fracture Mechanical Material Property
+MW\$Megawatt\$Power Unit Megawatt\$Megawatts\$Mega Watt
+EC08\$Euro Code 8\$European Community 8
+EC\$Euro Code\$European Community
+TPZ\$Primary Zone Temperature\$Primary Zone Temperature (Combustion Temperature)
+TEMP\$Temperature
+TITISO\$Turbine Inlet Temperature (as defined in ISO 2314)
+PFM\$Probabilistic Fracture Mechanics\$Probabilistic fracture mechanics
+BCS\$Boundary Conditions
+ADP\$Aerodynamic Design Point
+CA\$Cold Ambient
+BFM\$Back Flow Margin
+BLOC\$Base Load Operation Capability
+CAC\$Cold Ambient Temperature\$Cold Ambient Curve
+CTE\$Coefficient of Thermal Expansion
+TIT ISO\$ISO Turbine Inlet Temperature
+TV2 / TV II\$Compressor Discharge Temperature
+HZ\$Frequency Unit Hertz\$Hertz
+MVI\$Compressor Inlet Mass Flow
+PIV\$Compressor Pressure Ratio\$Compressor pressure ratio\$Compressor Pressure ratio
+MT2\$Turbine exhaust mass flow, kg/s\$Turbine Outlet Mass Flow
+MV1\$Compressor air mass flow, kg/s\$Compressor Inlet Mass Flow
+PIT\$Turbine pressure ratio\$Turbine Pressure ratio
+PT1\$Turbine Inlet pressure
+TT0\$Turbine inlet temperature real TT0 (@ LE of Vane 1)\$Turbine Inlet Temperature at LE Turbine Vane 1
+TT1, ISO\$Turbine Inlet Temperature according ISO 2314 Definition
+FE, FEA\$Finite Elements Analysis
+TC2\$Compressor Exit Temperature
+DFM\$Deterministic Fracture Mechanics
+RT\$ROOM TEMPERATURE
+TT1\$Turbine Inlet Temperature\$Turbine Inlet ISO temperature
+NS\$Normal Start
+HA\$Hot Ambient
+TAMB\$Temperature Ambient\$Ambient Temperature
+FL\$Full Load
+MPA\$Mega Pascal (N/mm²)
+FSRF\$Fatigue Strength Reduction Factor
+GDP\$GROSS PLASTIC DEFORMATION CHECK
+FMI\$Fracture mechanics (Accounting for forging flaw crack growth)
+FMII\$Fracture mechanics (for extended LCF life)
+COG\$Center of Gravity\$Center Of Gravity
+FAD\$Failure Assessment Diagram\$Fracture Assessment Diagram
+FE / FEA / FEM\$Finite Element / Finite Element Analysis / Finite Element Method
+SC03\$SC03 - Finite Element Analysis Program
+FRANC\$Fracture Analysis Code
+GMAP\$Thermal Mapping Program
+RTH\$Result Thermal file (ANSYS)\$Result Thermal File (ANSYS)
+SA\$Strength Assessments
+LLGLOBAL\$Global Limit Load factor
+RST\$Result Structural file (ANSYS)
+FEA/FEM\$Finite Element Analysis/ Finite Element Method
+SFL\$ANSYS command, meaning applying surface load on line
+KMIN\$Stress Intensity at lower stress
+KMAX\$Stress Intensity at upper stress
+KS\$Stress Intensity at secondary stress
+SEQV\$Von-Mises stress in MPa
+TT1ISO\$Corrected Turbine Inlet Temperature
+CF\$Centrifugal Load
+FE/FEA/FEM\$Finite Element / Finite Element Analysis/ Finite Element Method
+FMA\$Fracture Mechanic Assessment
+TTISO\$Turbine inlet temperature iso, °C
+APDL\$ANSYS Parametric Design Language
+BFT\$Bulk Fluid Temperature
+FSBL\$Full Speed Base Load
+EC0\$Euro Code 0\$European Community 0
+EC1\$Euro Code 1\$European Community 1
+EC2\$Euro Code 2\$European Community 2
+EC3\$Euro Code 3\$European Community 3
+EC4\$Euro Code 4\$European Community 4
+EC5\$Euro Code 5\$European Community 5
+EC6\$Euro Code 6\$European Community 6
+EC7\$Euro Code 7\$European Community 7
+EC8\$Euro Code 8\$European Community 8
+EC9\$Euro Code 9\$European Community 9
+EC10\$Euro Code 10\$European Community 10
+EC11\$Euro Code 11\$European Community 11
+EC12\$Euro Code 12\$European Community 12
+EC13\$Euro Code 13\$European Community 13
+EC14\$Euro Code 14\$European Community 14
+EC15\$Euro Code 15\$European Community 15
+EC16\$Euro Code 16\$European Community 16
+EC17\$Euro Code 17\$European Community 17
+EC18\$Euro Code 18\$European Community 18
+EC19\$Euro Code 19\$European Community 19

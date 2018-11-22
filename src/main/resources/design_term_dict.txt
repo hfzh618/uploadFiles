@@ -1,0 +1,53 @@
+CAH\$Cooling Air Hole
+BOM\$Bill of Material
+DC\$Damping Cone\$Decision Sheet\$Damping cone
+F/M DRAWING\$Final Machining Drawing
+MM\$Millimeters
+ID\$Inner Diameter\$Inner Diffuser\$Inner diameter (hub)
+OD\$Outer Diameter\$Outer Diffuser\$Outer diameter (also tip, casing)
+CAD\$Computer Aided Design\$Computer Aided Drafting/Design
+CAM\$Computer Aided Manufacture\$Computer Aided manufacturing\$Computer Aided Manufacturing
+SID\$Siemens Integrated Design
+PD\$Product Definition
+HCO\$Hydraulic Clearance Optimization
+EOS\$Engineering Order Structure\$Engine Order Structure\$Engineering Order Structure SPS
+SPS\$Standard Product Structure\$STANDARD PRODUCT STRUCTURE\$STANDART PRODUCT SRUCTURE\$Standard Product Structure (complete set of product definitions of a frame in SAP OneP)
+BSOL\$Basic Solution\$BASIC SOLUTION\$Basic Solution (allgemeine technische Lösung)
+TE\$Trailing Edge
+DN\$Nominal Diameter
+TBC\$Thermal Barrier Coating\$Thermal barrier coating\$Thermal Boundary Coating\$Thermal Boundary Condition
+ALP3T\$Bearing performance calculation tool
+3I\$Ideas, Impulses, Initiative
+ECM\$Engineering Change Management\$Engineering Change Manager\$Engineering Change Master
+PD-PHIL\$Product Definition Philosophy
+CDA\$Controlled Diffusion Airfoil
+FMV\$Final Machined Vanes\$Final machined Vane (Phase I)\$Final machined Vane
+LE\$Leading Edge
+TLV\$Technical Delivery Specification\$Technische Liefervorschrift
+HPA\$High Performance Airfoil
+FMV-2\$Final Machined Vanes Phase 2
+OD/ID\$Outer Diameter/Inner Diameter
+LSF\$Large Steel Fabrication
+C\$Chamfer
+DIA\$Diameter
+DTM\$Datum Plane
+GRV\$Groove
+PRO/E\$Pro/Engineering
+R\$Round
+RAD\$Radial
+TAN\$Tangential
+CPL.\$Coupling
+CFP\$Compressor Flow Path
+NDT\$Non Destructive Testing\$Non-destructive testing
+VT\$Visual Testing
+VAD\$Vane Angle Deviation
+CH\$Cooling Hole
+DCX\$Damping Cone x, with x=1..4
+FBH (KSR)\$Flat-Botton Hole (German Kreisscheibenreflektor)\$Flat-bottom Hole (German Kreisscheibenreflektor)
+UT\$Ultrasonic Testing
+FTB\$Flame tube bottom
+HGP\$Hot Gas Path
+TDX_ID\$Turbine Disc x_Inner Diameter
+TDX_OD\$Turbine Disc x_Outer Diameter
+SCR\$Support Cone on RHS
+UC\$UPPER CASING
