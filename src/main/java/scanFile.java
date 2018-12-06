@@ -1,11 +1,14 @@
 import org.apache.commons.io.FileUtils;
-import org.json.JSONObject;
 
 import javax.annotation.Resource;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
+
+import jcifs.smb.SmbFile;
+import jcifs.smb.NtlmPasswordAuthentication;
+
 
 public class scanFile {
 
@@ -69,17 +72,43 @@ public class scanFile {
         return testMap;
     }
 
+    public void scanLog(String scanLog) throws IOException{
+//        long timeStamp = System.currentTimeMillis();  //获取当前时间戳,也可以是你自已给的一个随机的或是别人给你的时间戳(一定是long型的数据)
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd-HH:mm");//这个是你要转成后的时间的格式
+//        String sd = sdf.format(new Date(timeStamp));   // 时间戳转换成时间
+        String path = "scan-progress.txt";
+        BufferedWriter out = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(path,true)));
+        out.write(scanLog+"\r\n");
+        out.close();
+        //下面的过程用于记录扫描的过程
+    }
+
     /**
      * 此函数与上个函数做区分
      * 从扫描后的List中进行操作
      * */
-    public void ListClassific(ArrayList<String> scanFiles, int numbers)throws IOException{
-        int count=1;
+    public void ListClassific(ArrayList<String> scanFiles)throws IOException{
+        int count=0;
+        String scanLog="";
         for (String line:scanFiles){
-            System.out.print(count+":");
-            classific(line);
             count++;
+            if (count==1){
+                scanLog=String.format("scan File started");
+                scanLog(scanLog);
+            }
+            if(count == scanFiles.size()){
+                scanLog=String.format("scan %d File ended",count);
+                scanLog(scanLog);
+            }
+            if(count%100==0){
+                scanLog=String.format("it scans to %d file and the path is %s",count,line);
+                scanLog(scanLog);
+            }
+            System.out.println("count:"+count);
+            classific(line);
         }
+
     }
 
     /**
@@ -89,8 +118,8 @@ public class scanFile {
     public void classific(String path) throws IOException{
 
         //对路径进行分词 按照/来分
-//        String[] words = path.split("\\\\");
-        String[] words = path.split("/");
+        String[] words = path.split("\\\\");   //windows
+//        String[] words = path.split("/");      //Mac
 
         String lastExcept =words[words.length-1].split("\\.")[0];
         words[words.length-1] = lastExcept;
@@ -178,7 +207,8 @@ public class scanFile {
      * */
     public String CreateAnalysisPath(String engine,String component,String analysis) throws IOException{
 
-        String enginepath = readProperties("properties.json","serverPath");
+//        String enginepath = readProperties("properties.json","serverPath");
+        String enginepath = getProperties("serverPath");
 
         //创建engine目录
         enginepath = enginepath + "/" + engine;
@@ -246,7 +276,9 @@ public class scanFile {
      * */
     public String CreateDesignPath(String engine,String component,String design) throws IOException{
 
-        String enginepath = readProperties("properties.json","serverPath");
+//        String enginepath = readProperties("properties.json","serverPath");
+        String enginepath = getProperties("serverPath");
+
         //创建engine目录
         enginepath = enginepath + "/" + engine;
         File file = new File(enginepath);
@@ -410,30 +442,67 @@ public class scanFile {
         return exist;
     }
 
-    public String readProperties(String path,String key) throws IOException{
-        InputStream stream = getClass().getClassLoader().getResourceAsStream(path);
-        File targetFile = new File(path);
-        FileUtils.copyInputStreamToFile(stream, targetFile);
-        String content= FileUtils.readFileToString(targetFile,"UTF-8");
-        JSONObject jsonObject=new JSONObject(content);
-        String s = jsonObject.getString(key);
-        return s;
+    public static String getProperties(String key){
+        if (key == null || key == "" || "".equals(key)) {
+            return null;
+        }
+        Properties properties = new Properties();
+        File file = new File("config.properties");
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(file);
+            properties.load(fis);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties.getProperty(key);
     }
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws Exception {
         scanFile scanFile = new scanFile();
+        System.out.println("Hello world");
         //人为添加无效单词
-        scanFile.addUseless();
+//        scanFile.addUseless();
 
-        //读取配置json文件
-        String folderPath = scanFile.readProperties("properties.json","folderPath");
+        scanFile.smb();
 
+//        //读取配置json文件
+//        String folderPath = getProperties("folderPath");
+//        System.out.println("folderPath: "+folderPath);
+//        scanFilesWithRecursion(folderPath);
+        //开始扫描文件
 
-        scanFilesWithRecursion(folderPath);
-        for (Object object:scanFiles){
-            System.out.println(object);
+//        scanFile.ListClassific(scanFiles);
+    }
+
+    public void smb(){
+        NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication("10.141.245.17","huhu","huhu");
+        String url = "smb://10.141.245.17/ftp/Knight.zip";
+        try {
+            SmbFile remoteFile = new SmbFile(url, auth);
+            if (remoteFile.exists()) {
+                remoteFile.delete();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        scanFile.ListClassific(scanFiles,5000);
+
+    }
+
+    public void readShare() throws Exception{
+        //smb://xxx:xxx@192.168.2.188/testIndex/
+        //xxx:xxx是共享机器的用户名密码
+        String url="smb://huhu:huhu@10.141.245.17/ftp/";
+        SmbFile file = new SmbFile(url);
+        if(file.exists()){
+            SmbFile[] files = file.listFiles();
+            for(SmbFile f : files){
+                System.out.println(f.getName());
+            }
+        }
     }
 
     private static ArrayList<String> scanFiles = new ArrayList<String>();
@@ -462,8 +531,4 @@ public class scanFile {
         }
         return scanFiles;
     }
-
-
-
-
 }
