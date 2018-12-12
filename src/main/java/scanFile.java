@@ -1,3 +1,4 @@
+import jcifs.smb.SmbFileInputStream;
 import org.apache.commons.io.FileUtils;
 
 import javax.annotation.Resource;
@@ -11,17 +12,6 @@ import jcifs.smb.NtlmPasswordAuthentication;
 
 
 public class scanFile {
-
-    @Resource
-    private List<String> allUseless = new ArrayList<>();
-
-    public List<String> addUseless(){
-        String[] all = {"C:","D:","New folder","project","Local","Users","Program Files","AppData","A_Personal","desktop","work","xu","Desktop","desktop1","Siemens","$RECYCLE.BIN","Documents","Document","docxall","refer","task","Reference","Data","OTHER","Windows","Conference","pdf","pandas","images","tests","My Ebook","Drawings","Program Files (x86)","Customer","anaconda3","Excel VBA","reference","Microsoft","temp","text","AISC","Temp","$Recycle.Bin"};
-        for (String a:all){
-            allUseless.add(a);
-        }
-        return allUseless;
-    }
 
     /**
      * 此函数用来从库中进行分词
@@ -73,9 +63,6 @@ public class scanFile {
     }
 
     public void scanLog(String scanLog) throws IOException{
-//        long timeStamp = System.currentTimeMillis();  //获取当前时间戳,也可以是你自已给的一个随机的或是别人给你的时间戳(一定是long型的数据)
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd-HH:mm");//这个是你要转成后的时间的格式
-//        String sd = sdf.format(new Date(timeStamp));   // 时间戳转换成时间
         String path = "scan-progress.txt";
         BufferedWriter out = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(path,true)));
@@ -91,6 +78,7 @@ public class scanFile {
     public void ListClassific(ArrayList<String> scanFiles)throws IOException{
         int count=0;
         String scanLog="";
+        //下面的for循环用于产生扫描记录文件
         for (String line:scanFiles){
             count++;
             if (count==1){
@@ -106,6 +94,7 @@ public class scanFile {
                 scanLog(scanLog);
             }
             System.out.println("count:"+count);
+            //调用classific函数对每条路径进行分析
             classific(line);
         }
 
@@ -121,6 +110,7 @@ public class scanFile {
         String[] words = path.split("\\\\");   //windows
 //        String[] words = path.split("/");      //Mac
 
+        //对最后一个单词进行分析 去掉后缀名
         String lastExcept =words[words.length-1].split("\\.")[0];
         words[words.length-1] = lastExcept;
 
@@ -129,18 +119,11 @@ public class scanFile {
         //inEntity为在总的实体库中的单词
         //inUseless为该路径中无效的单词
         //regex为正则表达式匹配出来的单词
-        List<String> allUseless = addUseless();
         Set<String> inEntity = new HashSet<>();
-        Set<String> inUseless = new HashSet<>();
         Set<String> regex = new HashSet<>();
-//        String allPath = "/Users/hufangzhou/Desktop/abbrdictc.txt";
         String allPath = "abbrdictc.txt";
+        //把路径中的所有单词抽离出来 放到inEntity中
         for (String word:words){
-            //先在无效单词库中查找
-            if (allUseless.contains(word)){
-                inUseless.add(word);
-            }
-            else {
                 ///在实体库中查找
                 if (existInEntity(word,allPath)) {
                     inEntity.add(word);
@@ -158,9 +141,8 @@ public class scanFile {
                 if (ruleAnalysis(word)){
                     regex.add(word);
                 }
-            }
         }
-        //细化实体库中的实体
+        //细化实体库（inEntity）中的实体 到对应的engine component 等细节
         Set<String> engineSet = NEGoutput("engine_dict.txt",inEntity,"engine");
         Set<String> componentSet =  NEGoutput("component_dict.txt",inEntity,"component");
         Set<String> analysisSet = NEGoutput("analysis_term_dict.txt",inEntity,"analysis");
@@ -183,8 +165,10 @@ public class scanFile {
             System.out.println("com: "+componet);
             String analysis = analysisList.get(0);
             System.out.println(String.format("entity->%s component->%s analysis->%s",engine,componet,analysis));
+            //创建对应的目录
             String analysisPath = CreateAnalysisPath(engine,componet,analysis);
-            copyFile(path,analysisPath);
+            //然后上传文件
+            copyFileShare(path,analysisPath);
             System.out.println();
         }
 
@@ -197,7 +181,7 @@ public class scanFile {
             String design = designList.get(0);
             System.out.println(String.format("entity->%s component->%s design->%s",engine,componet,design));
             String designPath = CreateDesignPath(engine,componet,design);
-            copyFile(path,designPath);
+            copyFileShare(path,designPath);
         }
         System.out.println();
     }
@@ -207,11 +191,11 @@ public class scanFile {
      * */
     public String CreateAnalysisPath(String engine,String component,String analysis) throws IOException{
 
-//        String enginepath = readProperties("properties.json","serverPath");
         String enginepath = getProperties("serverPath");
+//        String enginepath = "\\\\10.141.245.17\\ftp";
 
         //创建engine目录
-        enginepath = enginepath + "/" + engine;
+        enginepath = enginepath + "\\" + engine;
         File file = new File(enginepath);
         if (!file.exists()) {
             if (file.mkdir()) {
@@ -225,7 +209,7 @@ public class scanFile {
         }
 
         //创建engine下的component目录
-        String compentpath = enginepath + "/" + component;
+        String compentpath = enginepath + "\\" + component;
         File comfile = new File(compentpath);
         if (!comfile.exists()) {
             if (comfile.mkdir()) {
@@ -241,7 +225,7 @@ public class scanFile {
 
 
         //创建component下的analysis目录
-        String analysisPath = compentpath + "/analysis";
+        String analysisPath = compentpath + "\\analysis";
         File analysisFile = new File(analysisPath);
         if (!analysisFile.exists()) {
             if (analysisFile.mkdir()) {
@@ -256,7 +240,7 @@ public class scanFile {
 
 
         //创建analysis下的目录
-        String analysisLevelPath = analysisPath + "/" +analysis;
+        String analysisLevelPath = analysisPath + "\\" +analysis;
         File analysisLevelFile = new File(analysisLevelPath);
         if (!analysisLevelFile.exists()) {
             if (analysisLevelFile.mkdir()) {
@@ -276,11 +260,11 @@ public class scanFile {
      * */
     public String CreateDesignPath(String engine,String component,String design) throws IOException{
 
-//        String enginepath = readProperties("properties.json","serverPath");
         String enginepath = getProperties("serverPath");
+//        String enginepath = "\\\\10.141.245.17\\ftp";
 
         //创建engine目录
-        enginepath = enginepath + "/" + engine;
+        enginepath = enginepath + "\\" + engine;
         File file = new File(enginepath);
         if (!file.exists()) {
             if (file.mkdir()) {
@@ -294,7 +278,7 @@ public class scanFile {
         }
 
         //创建engine下的component目录
-        String compentpath = enginepath + "/" + component;
+        String compentpath = enginepath + "\\" + component;
         File comfile = new File(compentpath);
         if (!comfile.exists()) {
             if (comfile.mkdir()) {
@@ -308,7 +292,7 @@ public class scanFile {
         }
 
         //创建component下的design目录
-        String designPath = compentpath + "/design";
+        String designPath = compentpath + "\\design";
         File designFile = new File(designPath);
         if (!designFile.exists()) {
             if (designFile.mkdir()) {
@@ -322,7 +306,7 @@ public class scanFile {
         }
 
         //创建design下的目录
-        String designLevelPath = designPath + "/" + design;
+        String designLevelPath = designPath + "\\" + design;
         File designLevelFile = new File(designLevelPath);
         if (!designLevelFile.exists()) {
             if (designLevelFile.mkdir()) {
@@ -372,6 +356,39 @@ public class scanFile {
             System.out.println("复制单个文件操作出错");
             e.printStackTrace();
         }
+    }
+    /**
+     * 此函数用于将文件上传到对应的服务器地址
+     */
+    public void copyFileShare(String inPath,String outPath) throws IOException{
+//        String srcPath = "d:\\t.txt";
+        File oldfile = new File(inPath);
+
+        //下面的代码片段用于加上时间戳
+        String oldName = oldfile.getName();
+
+        File outFile = new File(outPath,oldName);
+        InputStream in = new FileInputStream(inPath);
+        OutputStream out = new FileOutputStream(outFile);
+        try {
+            byte[] bs = new byte[1024];
+            int len = -1;
+            while((len = in.read(bs)) != -1) {
+                out.write(bs, 0, len);
+            }
+        } finally {
+            try {
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("上传成功！！");
     }
 
     /**
@@ -464,46 +481,15 @@ public class scanFile {
     public static void main(String[] args) throws Exception {
         scanFile scanFile = new scanFile();
         System.out.println("Hello world");
-        //人为添加无效单词
-//        scanFile.addUseless();
-
-        scanFile.smb();
-
-//        //读取配置json文件
-//        String folderPath = getProperties("folderPath");
-//        System.out.println("folderPath: "+folderPath);
-//        scanFilesWithRecursion(folderPath);
-        //开始扫描文件
-
-//        scanFile.ListClassific(scanFiles);
+        String folderPath = getProperties("folderPath");
+//        String folderPath = "C:/Users/huhu/Desktop/siemensTemp";
+        System.out.println("folderPath: "+folderPath);
+        //第一步：扫描文件路径下的所有文件 得到的路径放在scanFiles中
+        scanFilesWithRecursion(folderPath);
+//        //第二步：对scanFiles中的文件进行处理
+        scanFile.ListClassific(scanFiles);
     }
 
-    public void smb(){
-        NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication("10.141.245.17","huhu","huhu");
-        String url = "smb://10.141.245.17/ftp/Knight.zip";
-        try {
-            SmbFile remoteFile = new SmbFile(url, auth);
-            if (remoteFile.exists()) {
-                remoteFile.delete();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-    public void readShare() throws Exception{
-        //smb://xxx:xxx@192.168.2.188/testIndex/
-        //xxx:xxx是共享机器的用户名密码
-        String url="smb://huhu:huhu@10.141.245.17/ftp/";
-        SmbFile file = new SmbFile(url);
-        if(file.exists()){
-            SmbFile[] files = file.listFiles();
-            for(SmbFile f : files){
-                System.out.println(f.getName());
-            }
-        }
-    }
 
     private static ArrayList<String> scanFiles = new ArrayList<String>();
 
